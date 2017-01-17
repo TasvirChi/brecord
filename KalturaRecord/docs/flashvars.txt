@@ -6,8 +6,8 @@ debugmode, default:false, if any value set to true
 #-----------------
 ks, REQUIRED
 pid, partner id, REQUIRED
-host, default: "www.kaltura.com"
-rtmphost, default: "rtmp://www.kaltura.com"
+host, default: "www.borhan.com"
+rtmphost, default: "rtmp://www.borhan.com"
 httpprotocol, http protocol used for API calls. if not specified, the same protocol that was used to load KRecord.swf is used. values of format "https" (no slashes)
 
 
@@ -68,13 +68,13 @@ delegate, JS object that is used to delegate methods, this object should have me
 entryname, the name for the new added entry. default: recorded_entry_pid_<partner_id><random number>
 entrytags, "", user tags for the newly created entry
 entrydescription, "", description of the newly created entry
-creditsscreenname, "", for anonymous user applications - the screen name of the user that contributed the entry (KalturaMediaEntry.creditUserName)
-creditssiteurl, "", for anonymous user applications - the website url of the user that contributed the entry (KalturaMediaEntry.creditUrl)
+creditsscreenname, "", for anonymous user applications - the screen name of the user that contributed the entry (BorhanMediaEntry.creditUserName)
+creditssiteurl, "", for anonymous user applications - the website url of the user that contributed the entry (BorhanMediaEntry.creditUrl)
 categories, "", comma separated string of category full names. DO NOT use if entitlements are enabled for the account!
-admintags, "", admin tags for the newly created entry (KalturaBaseEntry.adminTags)
-licensetype, "", the content license type to use, values enumerated in KalturaLicenseType (this is arbitrary to be set by the partner)
-groupid, "", used to group multiple entries in a group (KalturaBaseEntry.groupId)
-partnerdata, "", specific data for partners to store (KalturaBaseEntry.partnerData)
+admintags, "", admin tags for the newly created entry (BorhanBaseEntry.adminTags)
+licensetype, "", the content license type to use, values enumerated in BorhanLicenseType (this is arbitrary to be set by the partner)
+groupid, "", used to group multiple entries in a group (BorhanBaseEntry.groupId)
+partnerdata, "", specific data for partners to store (BorhanBaseEntry.partnerData)
 conversionQuality, "", conversion profile to be used with entry. if null, partner default profile is used
 
 

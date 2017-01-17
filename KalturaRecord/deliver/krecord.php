@@ -1,7 +1,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <?php
-require_once("kaltura_client.php");
+require_once("borhan_client.php");
 
 // Design params:
 $recorder_width = 400;
@@ -13,17 +13,17 @@ $uid = "your_user_id(whatever)";
 $uname = "your_user_name(whatever)";
 $pid = "your_partner_id";
 $spid = "your_sub_partner_id";
-$secret = "secret_key_given_kaltura_on_partner_registration";
-$host = "www.kaltura.com";
-$cdnHost = "cdn.kaltura.com";
+$secret = "secret_key_given_borhan_on_partner_registration";
+$host = "www.borhan.com";
+$cdnHost = "cdn.borhan.com";
 $uiconfId = "krecord_uiconf_id";
 
-$config = new KalturaConfiguration($pid, $spid);
+$config = new BorhanConfiguration($pid, $spid);
 
 $config->serviceUrl = $host;
-$client = new KalturaClient($config);
+$client = new BorhanClient($config);
 
-$user = new KalturaSessionUser();
+$user = new BorhanSessionUser();
 $user->userId = $uid;
 $user->screenName = $uname;
 
@@ -31,7 +31,7 @@ $result = $client->startSession($user, $secret, false, "edit:*");
 $ks = @$result["result"]["ks"];
 
 ?>
-	<title>KRecord - Kaltura Chromeless Recorder - JS Example</title>
+	<title>KRecord - Borhan Chromeless Recorder - JS Example</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.1/swfobject.js"></script>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>

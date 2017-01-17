@@ -1,4 +1,4 @@
-package com.kaltura.recording.view {
+package com.borhan.recording.view {
 
 	import flash.events.Event;
 	import flash.events.MouseEvent;

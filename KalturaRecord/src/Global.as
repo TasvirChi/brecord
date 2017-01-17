@@ -1,10 +1,10 @@
 package {
 
-	import com.kaltura.KalturaClient;
-	import com.kaltura.recording.controller.IRecordControl;
-	import com.kaltura.recording.view.KRecordViewParams;
-	import com.kaltura.recording.view.Theme;
-	import com.kaltura.utils.Locale;
+	import com.borhan.BorhanClient;
+	import com.borhan.recording.controller.IRecordControl;
+	import com.borhan.recording.view.KRecordViewParams;
+	import com.borhan.recording.view.Theme;
+	import com.borhan.utils.Locale;
 
 
 	public class Global {
@@ -14,7 +14,7 @@ package {
 		static public var THEME:Theme;
 		static public var LOCALE:Locale;
 		static public var RECORD_CONTROL:IRecordControl;
-		static public var KALTURA_CLIENT:KalturaClient;
+		static public var BORHAN_CLIENT:BorhanClient;
 		static public var DISABLE_GLOBAL_CLICK:Boolean = false;
 		
 		/**

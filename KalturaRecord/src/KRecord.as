@@ -5,11 +5,11 @@
    //                          | ' </ _` | |  _| || | '_/ _` |
    //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
    //
-   // This file is part of the Kaltura Collaborative Media Suite which allows users
+   // This file is part of the Borhan Collaborative Media Suite which allows users
    // to do with audio, video, and animation what Wiki platfroms allow them to do with
    // text.
    //
-   // Copyright (C) 2006-2008  Kaltura Inc.
+   // Copyright (C) 2006-2008  Borhan Inc.
    //
    // This program is free software: you can redistribute it and/or modify
    // it under the terms of the GNU Affero General Public License as
@@ -28,27 +28,27 @@
    // ===================================================================================================
  */
 package {
-	import com.kaltura.KalturaClient;
-	import com.kaltura.config.KalturaConfig;
-	import com.kaltura.devicedetection.DeviceDetectionEvent;
-	import com.kaltura.net.streaming.events.ExNetConnectionEvent;
-	import com.kaltura.net.streaming.events.FlushStreamEvent;
-	import com.kaltura.net.streaming.events.RecordNetStreamEvent;
-	import com.kaltura.recording.business.BaseRecorderParams;
-	import com.kaltura.recording.controller.KRecordControl;
-	import com.kaltura.recording.controller.events.AddEntryEvent;
-	import com.kaltura.recording.controller.events.PreviewEvent;
-	import com.kaltura.recording.controller.events.RecorderEvent;
-	import com.kaltura.recording.view.KRecordViewParams;
-	import com.kaltura.recording.view.UIComponent;
-	import com.kaltura.recording.view.View;
-	import com.kaltura.recording.view.ViewEvent;
-	import com.kaltura.recording.view.ViewState;
-	import com.kaltura.recording.view.ViewStatePreview;
-	import com.kaltura.utils.KConfigUtil;
-	import com.kaltura.utils.KUtils;
-	import com.kaltura.utils.ObjectHelpers;
-	import com.kaltura.vo.KalturaMediaEntry;
+	import com.borhan.BorhanClient;
+	import com.borhan.config.BorhanConfig;
+	import com.borhan.devicedetection.DeviceDetectionEvent;
+	import com.borhan.net.streaming.events.ExNetConnectionEvent;
+	import com.borhan.net.streaming.events.FlushStreamEvent;
+	import com.borhan.net.streaming.events.RecordNetStreamEvent;
+	import com.borhan.recording.business.BaseRecorderParams;
+	import com.borhan.recording.controller.KRecordControl;
+	import com.borhan.recording.controller.events.AddEntryEvent;
+	import com.borhan.recording.controller.events.PreviewEvent;
+	import com.borhan.recording.controller.events.RecorderEvent;
+	import com.borhan.recording.view.KRecordViewParams;
+	import com.borhan.recording.view.UIComponent;
+	import com.borhan.recording.view.View;
+	import com.borhan.recording.view.ViewEvent;
+	import com.borhan.recording.view.ViewState;
+	import com.borhan.recording.view.ViewStatePreview;
+	import com.borhan.utils.KConfigUtil;
+	import com.borhan.utils.KUtils;
+	import com.borhan.utils.ObjectHelpers;
+	import com.borhan.vo.BorhanMediaEntry;
 	
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
@@ -156,8 +156,8 @@ package {
 			
 			Global.DEBUG_MODE = pushParameters.hasOwnProperty("debugmode") ? true : false;
 
-			// create Kaltura client 
-			var configuration:KalturaConfig = new KalturaConfig();
+			// create Borhan client 
+			var configuration:BorhanConfig = new BorhanConfig();
 			configuration.partnerId = pushParameters.pid;
 			configuration.ignoreNull = 1;
 			configuration.domain = KUtils.hostFromCode(pushParameters.host);
@@ -173,7 +173,7 @@ package {
 			}
 			configuration.protocol += "://";
 
-			Global.KALTURA_CLIENT = new KalturaClient(configuration);
+			Global.BORHAN_CLIENT = new BorhanClient(configuration);
 
 			
 			_view.addEventListener(ViewEvent.VIEW_READY, startApplication);
@@ -240,8 +240,8 @@ package {
 			
 			// read flashVars for recorder params
 			_limitRecord = KConfigUtil.getDefaultValue(pushParameters.limitrecord, 0);
-			var hostUrl:String = KConfigUtil.getDefaultValue(pushParameters.host, "http://www.kaltura.com");
-			var rtmpHost:String = KConfigUtil.getDefaultValue(pushParameters.rtmphost, "rtmp://www.kaltura.com");
+			var hostUrl:String = KConfigUtil.getDefaultValue(pushParameters.host, "http://www.borhan.com");
+			var rtmpHost:String = KConfigUtil.getDefaultValue(pushParameters.rtmphost, "rtmp://www.borhan.com");
 			var fmsApp:String = KConfigUtil.getDefaultValue(pushParameters.fmsapp, "oflaDemo");
 			var isLive:Boolean = pushParameters.hasOwnProperty("islive") ? (pushParameters.islive == "1" || pushParameters.islive == "true") : false;
 			var streamName:String = pushParameters.hasOwnProperty("streamname") ? pushParameters.streamname : '';
@@ -838,7 +838,7 @@ package {
 
 
 		/**
-		 * add the last recording as a new Kaltura entry in the Kaltura Network.
+		 * add the last recording as a new Borhan entry in the Borhan Network.
 		 * @param entry_name				the name for the new added entry.
 		 * @param entry_tags				user tags for the newly created entry.
 		 * @param entry_description			description of the newly created entry.
@@ -855,7 +855,7 @@ package {
 		public function addEntry(entry_name:String = '', entry_tags:String = '', entry_description:String = '', credits_screen_name:String = '', credits_site_url:String = '', categories:String = "", admin_tags:String = '',
 			license_type:String = '', credit:String = '', group_id:String = '', partner_data:String = '', conversionQuality:String = ''):void {
 			if (entry_name == '')
-				entry_name = 'recorded_entry_pid' + Global.KALTURA_CLIENT.partnerId + '_' + (Math.floor(Math.random() * 1000000)).toString();
+				entry_name = 'recorded_entry_pid' + Global.BORHAN_CLIENT.partnerId + '_' + (Math.floor(Math.random() * 1000000)).toString();
 
 			notify("beforeAddEntry");
 			_recordControl.addEntry(entry_name, entry_tags, entry_description, credits_screen_name, credits_site_url, categories, admin_tags, license_type, credit, group_id, partner_data, conversionQuality);
@@ -869,7 +869,7 @@ package {
 
 
 		private function addEntryComplete(event:AddEntryEvent):void {
-			var entry:KalturaMediaEntry = event.info as KalturaMediaEntry;
+			var entry:BorhanMediaEntry = event.info as BorhanMediaEntry;
 			if (entry) {
 				_mostRecentEntryId = entry.id;
 				notify("addEntryComplete", entry);

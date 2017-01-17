@@ -1,4 +1,4 @@
-package com.kaltura.recording.controller
+package com.borhan.recording.controller
 {
 	/**
 	 * Dummy class that catches server calls to avoid flash errors

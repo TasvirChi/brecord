@@ -4,11 +4,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2011  Kaltura Inc.
+// Copyright (C) 2006-2011  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -25,36 +25,36 @@
 //
 // @ignore
 // ===================================================================================================
-package com.kaltura.vo
+package com.borhan.vo
 {
-	import com.kaltura.vo.KalturaThumbParamsOutputListResponse;
+	import com.borhan.vo.BorhanThumbParamsOutputListResponse;
 
-	import com.kaltura.vo.KalturaThumbParams;
+	import com.borhan.vo.BorhanThumbParams;
 
-	import com.kaltura.vo.KalturaFileSyncListResponse;
+	import com.borhan.vo.BorhanFileSyncListResponse;
 
-	import com.kaltura.vo.KalturaThumbAsset;
+	import com.borhan.vo.BorhanThumbAsset;
 
-	import com.kaltura.vo.BaseFlexVo;
+	import com.borhan.vo.BaseFlexVo;
 
 	[Bindable]
-	public dynamic class KalturaInvestigateThumbAssetData extends BaseFlexVo
+	public dynamic class BorhanInvestigateThumbAssetData extends BaseFlexVo
 	{
 		/**
 		**/
-		public var thumbAsset : KalturaThumbAsset;
+		public var thumbAsset : BorhanThumbAsset;
 
 		/**
 		**/
-		public var fileSyncs : KalturaFileSyncListResponse;
+		public var fileSyncs : BorhanFileSyncListResponse;
 
 		/**
 		**/
-		public var thumbParams : KalturaThumbParams;
+		public var thumbParams : BorhanThumbParams;
 
 		/**
 		**/
-		public var thumbParamsOutputs : KalturaThumbParamsOutputListResponse;
+		public var thumbParamsOutputs : BorhanThumbParamsOutputListResponse;
 
 		/** 
 		* a list of attributes which may be updated on this object 

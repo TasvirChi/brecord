@@ -1,6 +1,6 @@
 package
 {
-	import com.kaltura.utils.Locale;
+	import com.borhan.utils.Locale;
 	
 
 	public class KRecordLocaleDefault extends Locale

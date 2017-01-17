@@ -1,7 +1,7 @@
-package com.kaltura.recording.view 
+package com.borhan.recording.view 
 {
 
-	import com.kaltura.net.streaming.events.RecordNetStreamEvent;
+	import com.borhan.net.streaming.events.RecordNetStreamEvent;
 	
 	import flash.display.MovieClip;
 	import flash.events.Event;

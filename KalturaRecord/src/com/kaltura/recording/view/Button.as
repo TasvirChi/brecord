@@ -1,9 +1,9 @@
 // TODO: support label
 
-package com.kaltura.recording.view
+package com.borhan.recording.view
 {
 
-import com.kaltura.utils.KMovieClipUtil;
+import com.borhan.utils.KMovieClipUtil;
 
 import flash.display.MovieClip;
 import flash.events.Event;

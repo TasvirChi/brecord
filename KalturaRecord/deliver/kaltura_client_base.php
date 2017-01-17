@@ -1,10 +1,10 @@
 <?php
 /*
-This file is part of the Kaltura Collaborative Media Suite which allows users
+This file is part of the Borhan Collaborative Media Suite which allows users
 to do with audio, video, and animation what Wiki platfroms allow them to do with
 text.
 
-Copyright (C) 2006-2008 Kaltura Inc.
+Copyright (C) 2006-2008 Borhan Inc.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -20,15 +20,15 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-class KalturaClientBase 
+class BorhanClientBase 
 {
-	const KALTURA_API_VERSION = "0.7";
-	const KALTURA_SERVICE_FORMAT_JSON = 1;
-	const KALTURA_SERVICE_FORMAT_XML  = 2;
-	const KALTURA_SERVICE_FORMAT_PHP  = 3;
+	const BORHAN_API_VERSION = "0.7";
+	const BORHAN_SERVICE_FORMAT_JSON = 1;
+	const BORHAN_SERVICE_FORMAT_XML  = 2;
+	const BORHAN_SERVICE_FORMAT_PHP  = 3;
 
 	/**
-	 * @var KalturaConfiguration
+	 * @var BorhanConfiguration
 	 */
 	private $config;
 	
@@ -43,22 +43,22 @@ class KalturaClientBase
 	private $shouldLog = false;
 	
 	/**
-	 * Kaltura client constuctor, expecting configuration object 
+	 * Borhan client constuctor, expecting configuration object 
 	 *
-	 * @param KalturaConfiguration $config
+	 * @param BorhanConfiguration $config
 	 */
-	public function __construct(KalturaConfiguration $config)
+	public function __construct(BorhanConfiguration $config)
 	{
 		$this->config = $config;
 		
 		$logger = $this->config->getLogger();
-		if ($logger instanceof IKalturaLogger)
+		if ($logger instanceof IBorhanLogger)
 		{
 			$this->shouldLog = true;	
 		}
 	}
 		
-	public function hit($method, KalturaSessionUser $session_user, $params)
+	public function hit($method, BorhanSessionUser $session_user, $params)
 	{
 		$start_time = microtime(true);
 		
@@ -66,7 +66,7 @@ class KalturaClientBase
 		$this->log("trying to call method: [" . $method . "] for user id: [" . $session_user->userId . "] using session: [" .$this->ks . "]");
 		
 		// append the basic params
-		$params["kaltura_api_version"] 	= self::KALTURA_API_VERSION;
+		$params["borhan_api_version"] 	= self::BORHAN_API_VERSION;
 		$params["partner_id"] 			= $this->config->partnerId;
 		$params["subp_id"] 				= $this->config->subPartnerId;
 		$params["format"] 				= $this->config->format;
@@ -100,7 +100,7 @@ class KalturaClientBase
 		{
 			$this->log("result (serialized): " . $curl_result);
 			
-			if ($this->config->format == self::KALTURA_SERVICE_FORMAT_PHP)
+			if ($this->config->format == self::BORHAN_SERVICE_FORMAT_PHP)
 			{
 				$result = @unserialize($curl_result);
 
@@ -125,7 +125,7 @@ class KalturaClientBase
 		return $result;
 	}
 
-	public function start(KalturaSessionUser $session_user, $secret, $admin = null, $privileges = null, $expiry = 86400)
+	public function start(BorhanSessionUser $session_user, $secret, $admin = null, $privileges = null, $expiry = 86400)
 	{
 		$result = $this->startsession($session_user, $secret, $admin, $privileges, $expiry);
 
@@ -169,23 +169,23 @@ class KalturaClientBase
 	}
 }
 
-class KalturaSessionUser
+class BorhanSessionUser
 {
 	var $userId;
 	var $screenName;
 }
 
-class KalturaConfiguration
+class BorhanConfiguration
 {
 	private $logger;
 
-	public $serviceUrl    = "http://www.kaltura.com";
-	public $format        = KalturaClient::KALTURA_SERVICE_FORMAT_PHP;
+	public $serviceUrl    = "http://www.borhan.com";
+	public $format        = BorhanClient::BORHAN_SERVICE_FORMAT_PHP;
 	public $partnerId     = null;
 	public $subPartnerId  = null;
 	
 	/**
-	 * Constructs new kaltura configuration object, expecting partner id & sub partner id
+	 * Constructs new borhan configuration object, expecting partner id & sub partner id
 	 *
 	 * @param int $partnerId
 	 * @param int $subPartnerId
@@ -197,11 +197,11 @@ class KalturaConfiguration
 	}
 	
 	/**
-	 * Set logger to get kaltura client debug logs
+	 * Set logger to get borhan client debug logs
 	 *
-	 * @param IKalturaLogger $log
+	 * @param IBorhanLogger $log
 	 */
-	public function setLogger(IKalturaLogger $log)
+	public function setLogger(IBorhanLogger $log)
 	{
 		$this->logger = $log;
 	}
@@ -218,10 +218,10 @@ class KalturaConfiguration
 }
 
 /**
- * Implement to get kaltura client logs
+ * Implement to get borhan client logs
  *
  */
-interface IKalturaLogger 
+interface IBorhanLogger 
 {
 	function log($msg); 
 }

@@ -5,11 +5,11 @@
 //                          | ' </ _` | |  _| || | '_/ _` |
 //                          |_|\_\__,_|_|\__|\_,_|_| \__,_|
 //
-// This file is part of the Kaltura Collaborative Media Suite which allows users
+// This file is part of the Borhan Collaborative Media Suite which allows users
 // to do with audio, video, and animation what Wiki platfroms allow them to do with
 // text.
 //
-// Copyright (C) 2006-2008  Kaltura Inc.
+// Copyright (C) 2006-2008  Borhan Inc.
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as
@@ -27,24 +27,24 @@
 // @ignore
 // ===================================================================================================
 */
-package com.kaltura.recording.controller {
+package com.borhan.recording.controller {
 	// http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/events/NetStatusEvent.html#info
 	
-	import com.kaltura.KalturaClient;
-	import com.kaltura.commands.media.MediaAddFromRecordedWebcam;
-	import com.kaltura.devicedetection.DeviceDetectionEvent;
-	import com.kaltura.devicedetection.DeviceDetector;
-	import com.kaltura.events.KalturaEvent;
-	import com.kaltura.net.streaming.RecordNetStream;
-	import com.kaltura.net.streaming.events.ExNetConnectionEvent;
-	import com.kaltura.net.streaming.events.FlushStreamEvent;
-	import com.kaltura.net.streaming.events.RecordNetStreamEvent;
-	import com.kaltura.recording.business.BaseRecorderParams;
-	import com.kaltura.recording.controller.events.AddEntryEvent;
-	import com.kaltura.recording.controller.events.PreviewEvent;
-	import com.kaltura.recording.controller.events.RecorderEvent;
-	import com.kaltura.utils.ConnectionTester;
-	import com.kaltura.vo.KalturaMediaEntry;
+	import com.borhan.BorhanClient;
+	import com.borhan.commands.media.MediaAddFromRecordedWebcam;
+	import com.borhan.devicedetection.DeviceDetectionEvent;
+	import com.borhan.devicedetection.DeviceDetector;
+	import com.borhan.events.BorhanEvent;
+	import com.borhan.net.streaming.RecordNetStream;
+	import com.borhan.net.streaming.events.ExNetConnectionEvent;
+	import com.borhan.net.streaming.events.FlushStreamEvent;
+	import com.borhan.net.streaming.events.RecordNetStreamEvent;
+	import com.borhan.recording.business.BaseRecorderParams;
+	import com.borhan.recording.controller.events.AddEntryEvent;
+	import com.borhan.recording.controller.events.PreviewEvent;
+	import com.borhan.recording.controller.events.RecorderEvent;
+	import com.borhan.utils.ConnectionTester;
+	import com.borhan.vo.BorhanMediaEntry;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -66,49 +66,49 @@ package com.kaltura.recording.controller {
 	import mx.utils.ObjectUtil;
 	import mx.utils.UIDUtil;
 
-	[Event(name = "detectedMicrophone", type = "com.kaltura.devicedetection.DeviceDetectionEvent")]
-	[Event(name = "detectedCamera", type = "com.kaltura.devicedetection.DeviceDetectionEvent")]
-	[Event(name = "errorMicrophone", type = "com.kaltura.devicedetection.DeviceDetectionEvent")]
-	[Event(name = "errorCamera", type = "com.kaltura.devicedetection.DeviceDetectionEvent")]
+	[Event(name = "detectedMicrophone", type = "com.borhan.devicedetection.DeviceDetectionEvent")]
+	[Event(name = "detectedCamera", type = "com.borhan.devicedetection.DeviceDetectionEvent")]
+	[Event(name = "errorMicrophone", type = "com.borhan.devicedetection.DeviceDetectionEvent")]
+	[Event(name = "errorCamera", type = "com.borhan.devicedetection.DeviceDetectionEvent")]
 	
-	[Event(name = "netconnectionConnectClosed", type = "com.kaltura.net.streaming.events.ExNetConnectionEvent")]
-	[Event(name = "netconnectionConnectFailed", type = "com.kaltura.net.streaming.events.ExNetConnectionEvent")]
-	[Event(name = "netconnectionConnectSuccess", type = "com.kaltura.net.streaming.events.ExNetConnectionEvent")]
-	[Event(name = "netconnectionConnectRejected", type = "com.kaltura.net.streaming.events.ExNetConnectionEvent")]
-	[Event(name = "netconnectionConnectInvalidapp", type = "com.kaltura.net.streaming.events.ExNetConnectionEvent")]
+	[Event(name = "netconnectionConnectClosed", type = "com.borhan.net.streaming.events.ExNetConnectionEvent")]
+	[Event(name = "netconnectionConnectFailed", type = "com.borhan.net.streaming.events.ExNetConnectionEvent")]
+	[Event(name = "netconnectionConnectSuccess", type = "com.borhan.net.streaming.events.ExNetConnectionEvent")]
+	[Event(name = "netconnectionConnectRejected", type = "com.borhan.net.streaming.events.ExNetConnectionEvent")]
+	[Event(name = "netconnectionConnectInvalidapp", type = "com.borhan.net.streaming.events.ExNetConnectionEvent")]
 	
-	[Event(name = "netstreamRecordStart", type = "com.kaltura.net.streaming.events.RecordNetStreamEvent")]
-	[Event(name = "netstreamPlayStop", type = "com.kaltura.net.streaming.events.RecordNetStreamEvent")]
+	[Event(name = "netstreamRecordStart", type = "com.borhan.net.streaming.events.RecordNetStreamEvent")]
+	[Event(name = "netstreamPlayStop", type = "com.borhan.net.streaming.events.RecordNetStreamEvent")]
 	
-	[Event(name = "flushComplete", type = "com.kaltura.net.streaming.events.FlushStreamEvent")]
+	[Event(name = "flushComplete", type = "com.borhan.net.streaming.events.FlushStreamEvent")]
 	
-	[Event(name = "addEntryResult", type = "com.kaltura.recording.controller.events.AddEntryEvent")]
-	[Event(name = "addEntryFault", type = "com.kaltura.recording.controller.events.AddEntryEvent")]
+	[Event(name = "addEntryResult", type = "com.borhan.recording.controller.events.AddEntryEvent")]
+	[Event(name = "addEntryFault", type = "com.borhan.recording.controller.events.AddEntryEvent")]
 	
 	/**
 	 * dispatched when the record stream's buffer is empty after recording has stopped
 	 * */
-	[Event(name = "recordComplete", type = "com.kaltura.recording.controller.events.RecorderEvent")]
+	[Event(name = "recordComplete", type = "com.borhan.recording.controller.events.RecorderEvent")]
 	
 	/**
 	 * dispatched when the preview stream starts playing
 	 * */
-	[Event(name = "previewStarted", type = "com.kaltura.recording.controller.events.PreviewEvent")]
+	[Event(name = "previewStarted", type = "com.borhan.recording.controller.events.PreviewEvent")]
 	
 	/**
 	 * dispatched when the preview stream stops playing
 	 * */
-	[Event(name = "previewStopped", type = "com.kaltura.recording.controller.events.PreviewEvent")]
+	[Event(name = "previewStopped", type = "com.borhan.recording.controller.events.PreviewEvent")]
 	
 	/**
 	 * dispatched when the preview stream is paused
 	 * */
-	[Event(name = "previewPaused", type = "com.kaltura.recording.controller.events.PreviewEvent")]
+	[Event(name = "previewPaused", type = "com.borhan.recording.controller.events.PreviewEvent")]
 	
 	/**
 	 * dispatched when the preview stream resumes playing
 	 * */
-	[Event(name = "previewResumed", type = "com.kaltura.recording.controller.events.PreviewEvent")]
+	[Event(name = "previewResumed", type = "com.borhan.recording.controller.events.PreviewEvent")]
 	
 	
 	
@@ -120,7 +120,7 @@ package com.kaltura.recording.controller {
 	 *	3. Server Connection and Error Handling.
 	 *	4. Video and Audio Recording on Red5, Handling of internal NetStream Events and Errors.
 	 *	5. Preview Mechanism - Live Preview using RTMP (Before addentry).
-	 *	6. Simplified addentry function to Kaltura Network Servers.
+	 *	6. Simplified addentry function to Borhan Network Servers.
 	 *	7. Full JavaScript interaction layer.
 	 *	8. Dispatching of Events by Single Object to simplify Development of Recording Applications.</p>
 	 * KRecorder does NOT provide any visual elements beyond a native flash video component attached to the recording NetStream.
@@ -1054,7 +1054,7 @@ package com.kaltura.recording.controller {
 
 
 		/**
-		 * add the last recording as a new Kaltura entry in the Kaltura Network.
+		 * add the last recording as a new Borhan entry in the Borhan Network.
 		 * @param entry_name				the name for the new added entry.
 		 * @param entry_tags				user tags for the newly created entry.
 		 * @param entry_description			description of the newly created entry.
@@ -1067,14 +1067,14 @@ package com.kaltura.recording.controller {
 		 * @param group_id					used to group multiple entries in a group.
 		 * @param partner_data				special custom data for partners to store.
 		 * @param conversionQuality			conversion profile to be used with entry. if null, partner defult profile is used
-		 * @see com.kaltura.recording.business.AddEntryDelegate
+		 * @see com.borhan.recording.business.AddEntryDelegate
 		 */
 		public function addEntry(entry_name:String, entry_tags:String, entry_description:String, credits_screen_name:String = '',
 			credits_site_url:String = '', categories:String = "", admin_tags:String = '', license_type:String = '',
 			credit:String = '', group_id:String = '', partner_data:String = '', conversionQuality:String = ''):void {
 
-			var kc:KalturaClient = Global.KALTURA_CLIENT;
-			var entry:KalturaMediaEntry = new KalturaMediaEntry();
+			var kc:BorhanClient = Global.BORHAN_CLIENT;
+			var entry:BorhanMediaEntry = new BorhanMediaEntry();
 			entry.mediaType = 1;
 			entry.name = entry_name;
 			entry.tags = entry_tags;
@@ -1096,8 +1096,8 @@ package com.kaltura.recording.controller {
 			//
 			var addEntry:MediaAddFromRecordedWebcam = new MediaAddFromRecordedWebcam(entry, streamUid);
 			addEntry.useTimeout = false;
-			addEntry.addEventListener(KalturaEvent.COMPLETE, addEntryResultHandler);
-			addEntry.addEventListener(KalturaEvent.FAILED, addEntryFaultHandler);
+			addEntry.addEventListener(BorhanEvent.COMPLETE, addEntryResultHandler);
+			addEntry.addEventListener(BorhanEvent.FAILED, addEntryFaultHandler);
 			kc.post(addEntry);
 		}
 

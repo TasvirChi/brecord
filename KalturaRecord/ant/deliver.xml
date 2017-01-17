@@ -28,7 +28,7 @@
 	</target>
 	
 	<target name="compile" description="compile release build of KRecord into DEPLOY_DIR">
-		<fb.exportReleaseBuild project="KalturaRecord" destdir="${DEPLOY_DIR}"/> 
+		<fb.exportReleaseBuild project="BorhanRecord" destdir="${DEPLOY_DIR}"/> 
 		<echo>KRecord release build created</echo>
 	</target>
 			
